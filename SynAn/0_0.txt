@@ -1,0 +1,25 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+
+)(
+void main() {
+	int 1y = 10;
+	string c;
+	for (i = 0; i < y; i++) {
+		double r = 8.4;
+		y++;
+	}	
+	{
+		for(;;) {
+			while(i < N) {
+				printf("%d", i);
+			}
+
+		}
+		continue;
+		
+	}
+}
+int main(){
+}
