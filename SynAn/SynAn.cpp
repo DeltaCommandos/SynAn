@@ -30,7 +30,14 @@ int main()
 			system("0_0.txt");
 			break;
 		}
-		case 3:   // Выход
+		case 3:
+		{
+			system("cls");
+			printf("\n\t\x1b[38;5;040mУсловие задачи:\n\t12. Написать программу, определяющую корректность \n\tрасположения в коде операторов continue\n\x1b[1;0m");
+			system("pause");
+			break;
+		}
+		case 4:   // Выход
 		{
 			exit(0);
 		}

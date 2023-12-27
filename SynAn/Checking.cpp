@@ -2,160 +2,173 @@
 
 
 void Checking::bracketCheck() {
-	int brackets[4] = { };
+	int brackets[6] = { };
 	int comment = 0;
-	int checkCR = 0,checkFR = 0;
+	int lines = 1;
+	//int checkCR = 0,checkFR = 0, checkSR = 0, checkSL=0, checkCL = 0, checkFL = 0;
+	int op = 1, er = 0, opr = 1, err = 0, opp = 1, erp = 0;
 	for (string count : ArrNoSpace) {
 
-		if (count == "//"){
+		//if (count == "//"){
+		//	comment = 1;
+		//}
+		//if (count == "\n") {
+		//	comment = 0;
+		//}
+		//if (comment == 1) {
+		//	continue;
+		//}
+		//if (count == "(") {
+		//	brackets[0]++;
+		//	if ((checkCR > checkCL)/*&&()*/) {
+		//		checkCL++;
+		//	}
+		//}
+		//
+		//if (count == ")") {
+		//	brackets[1]++;
+		//	if (brackets[0] - brackets[1] < 0) {
+		//		checkCR++;
+		//	}
+		//	if ((checkCL > 0)/*&&()*/) {
+		//		checkCL--;
+		//	}
+		//}
+		//if (count == "{"){
+		//	brackets[2]++;
+		//	if ((checkFR > checkFL)/*&&()*/) {
+		//		checkFL++;
+		//	}
+		//}
+		//if (count == "}") {
+		//	brackets[3]++;
+		//	if (brackets[2] - brackets[3] < 0) {
+		//		checkFR++;
+		//	}
+		//	if ((checkFL > 0)/*&&()*/) {
+		//		checkFL--;
+		//	}
+		//}
+		//if (count == "[") {
+		//	brackets[4]++;
+		//	if ((checkFR > checkFL)/*&&()*/) {
+		//		checkFL++;
+		//	}
+		//}
+		//if (count == "]") {
+		//	brackets[5]++;
+		//	if (brackets[2] - brackets[3] < 0) {
+		//		checkFR++;
+		//	}
+		//	if ((checkFL > 0)/*&&()*/) {
+		//		checkFL--;
+		//	}
+		//}
+		if (count == "//")
 			comment = 1;
-		}
 		if (count == "\n") {
 			comment = 0;
+			lines++;
 		}
 		if (comment == 1) {
 			continue;
 		}
-
-
-		if (count == "(") 
+		if (count == "(") {
+			op--;
 			brackets[0]++;
-		
+		}
 		if (count == ")") {
 			brackets[1]++;
-			if (brackets[0] - brackets[1] < 0) {
-				checkCR++;
-			}
+			if (op == 1)
+				er = 1;
+			else
+				op++;
 		}
-
-		if (count == "{")
+		if (count == "{") {
+			opr--;
 			brackets[2]++;
+		}
 
 		if (count == "}") {
 			brackets[3]++;
-			if (brackets[2] - brackets[3] < 0) {
-				checkFR++;
-			}
+			if (opr == 1)
+				err = 1;
+			else
+				opr++;
+		}
+
+		if (count == "[") {
+			brackets[4]++;
+			opp--;
+		}
+
+		if (count == "]") {
+			brackets[5]++;
+			if (opp == 1)
+				erp = 1;
+			else
+				opp++;
 		}
 	}
 	
-	if ((brackets[0] != brackets[1])||(checkCR!=0)) {
-		ErrBr.StrNum.push_back(abs(brackets[0] - brackets[1])+checkCR);
+	if (er == 1) {
+		ErrOnlyStr.push_back("Неправильное расположение круглых(-ой) скобок(-и)!");
+	}
+	if (err == 1) {
+		ErrOnlyStr.push_back("Неправильное расположение фигурных(-ой) скобок(-и)!");
+	}
+	if (erp == 1) {
+		ErrOnlyStr.push_back("Неправильное расположение квадратных(-ой) скобок(-и)!");
+	}
+
+	if (brackets[0] > brackets[1]) {
+		ErrBr.StrNum.push_back(abs(brackets[0] - brackets[1]));
 		ErrBr.Description.push_back(" круглых(-ой) скобок(-и)!");
+		ErrBr.YesNo.push_back(0);
 	}
-	if ((brackets[2] != brackets[3]) || (checkFR != 0)) {
-		ErrBr.StrNum.push_back(abs(brackets[2] - brackets[3])+checkFR);
-		ErrBr.Description.push_back(" фигурных(-ой) скобок(-и)!");
+	if (brackets[0] < brackets[1]) {
+		ErrBr.StrNum.push_back(abs(brackets[0] - brackets[1]));
+		ErrBr.Description.push_back(" круглых(-ой) скобок(-и)!");
+		ErrBr.YesNo.push_back(1);
 	}
+	if (brackets[2] > brackets[3]) {
+		ErrBr.StrNum.push_back(abs(brackets[2] - brackets[3]));
+		ErrBr.Description.push_back(" круглых(-ой) скобок(-и)!");
+		ErrBr.YesNo.push_back(0);
+	}
+	if (brackets[2] < brackets[3]) {
+		ErrBr.StrNum.push_back(abs(brackets[2] - brackets[3]));
+		ErrBr.Description.push_back(" круглых(-ой) скобок(-и)!");
+		ErrBr.YesNo.push_back(1);
+	}
+	if (brackets[4] > brackets[5]) {
+		ErrBr.StrNum.push_back(abs(brackets[4] - brackets[5]));
+		ErrBr.Description.push_back(" круглых(-ой) скобок(-и)!");
+		ErrBr.YesNo.push_back(0);
+	}
+	if (brackets[4] < brackets[5]) {
+		ErrBr.StrNum.push_back(abs(brackets[4] - brackets[5]));
+		ErrBr.Description.push_back(" круглых(-ой) скобок(-и)!");
+		ErrBr.YesNo.push_back(1);
+	}
+
+	//if ((brackets[0] == brackets[1]) && checkCR != 0) {
+	//	ErrBr.StrNum.push_back(checkCR + checkCL);
+	//	ErrBr.Description.push_back(" круглых(-ой) скобок(-и)!");
+	//}
+	//if ((brackets[2] == brackets[3]) && checkFR != 0) {
+	//	ErrBr.StrNum.push_back(checkFR + checkFL);
+	//	ErrBr.Description.push_back(" фигурных(-ой) скобок(-и)!");
+	//}
+	//if ((brackets[4] == brackets[5]) && checkSR != 0) {
+	//	ErrBr.StrNum.push_back(checkSR + checkSL);
+	//	ErrBr.Description.push_back(" квадратных(-ой) скобок(-и)!");
+	//}
+
 }
 
 void Checking::conBreCheck(int a) {
 
-	/*int p1 = 0, p2 = 0;
-	int br1 = 0, br2 = 0;
-	int brFlag = 0, i = 0, comment = 0;
-
-	vector <int> bracketpos{};
-	string elem;
-
-	int lines = 1;
-	for (string q : ArrNoSpace) {
-
-		if (q == "//")
-			comment = 1;
-		if (q == "\n") {
-			comment = 0;
-		}
-		if(comment==1)
-			continue;
-
-		if ((q == "for") || (q == "while")) {
-			if (i == N)
-				break;
-			if (ArrNoSpace[i + 1] == "(") {
-				int t1 = i + 2;
-				for (t1; t1 < N; t1++) {
-					if (ArrNoSpace[t1] == "(") {
-						br1++;
-					}
-					if (ArrNoSpace[t1] == ")") {
-						if (br1 != 0) {
-							br1--;
-						}
-						else {
-							if (ArrNoSpace[t1 + 1] != "{") {
-								ErrOnlyStr.push_back("Нет тела цикла");
-								break;
-							}
-							else {
-								int p1 = t1 + 1, p = t1 + 2;
-								while (p < N) {
-									if (ArrNoSpace[p] == "{") {
-										br2++;
-									}
-									if (ArrNoSpace[p] == "}") {
-										if (br2 != 0) {
-											br2--;
-										}
-										else {
-											brFlag = 1;
-											p2 = p;
-											bracketpos.push_back(p1);
-											bracketpos.push_back(p2);
-											p1 = 0;
-											p2 = 0;
-											break;
-										}
-									}
-									p++;
-								}
-								if (brFlag == 0) {
-									bracketpos.push_back(0);
-									bracketpos.push_back(0);
-								}
-								p1 = 0;
-								p2 = 0;
-								break;
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				ErrOnlyStr.push_back("Нет круглой скобки в цикле");
-			}
-		}
-
-		i++;
-	}
-	for (int i = 0; i < N; i++) {
-		int lastlastflag = 0;
-		if (ArrNoSpace[i] == "\n")
-			lines++;
-		if (ArrNoSpace[i] == "continue") {
-			for (int j = 0; j < bracketpos.size(); j = j + 2) {
-				if ((i > bracketpos[j]) && (i < bracketpos[j + 1])) {
-					lastlastflag = 1;
-				}
-			}
-			if ((!lastlastflag)&&(a == 8)){
-					ErrStrAndNum.StrNum.push_back(lines);
-					ErrStrAndNum.Description.push_back(" continue расположен неправильно!");
-				}
-			}
-		if (ArrNoSpace[i] == "break") {
-			for (int j = 0; j < bracketpos.size(); j = j + 2) {
-				if ((i > bracketpos[j]) && (i < bracketpos[j + 1])) {
-					lastlastflag = 1;
-				}
-			}
-			if ((!lastlastflag) && (a == 9)) {
-					ErrStrAndNum.StrNum.push_back(lines);
-					ErrStrAndNum.Description.push_back(" break расположен неправильно!");
-				}
-			}
-		}*/
 
 	int p1 = 0, p2 = 0;
 	int br1 = 0, br2 = 0;
@@ -181,7 +194,7 @@ void Checking::conBreCheck(int a) {
 			if (ArrNoSpace[i + 1] == "(") {
 				int t1 = i + 2;
 				for (t1; t1 < N; t1++) {
-					if (ArrNoSpace[t1] == "(") { //
+					if (ArrNoSpace[t1] == "(") { 
 						br1++;
 					}
 					if (ArrNoSpace[t1] == ")") {
@@ -273,7 +286,7 @@ void Checking::conBreCheck(int a) {
 											if (ArrNoSpace[NextLinBr + 2] == "(") {
 												int t2 = NextLinBr + 3;
 												for (t2; t2 < N; t2++) {
-													if (ArrNoSpace[t2] == "(") { //
+													if (ArrNoSpace[t2] == "(") { 
 														br1++;
 													}
 													if (ArrNoSpace[t2] == ")") {
@@ -387,6 +400,9 @@ void Checking::conBreCheck(int a) {
 					}
 				}
 			}
+			else {
+ 
+			}
 		}
 		i++;
 	}
@@ -422,7 +438,7 @@ void Checking::conBreCheck(int a) {
 
 void Checking::IniCheck() {
 
-	vector <string> namesint{};
+	
 	int comment = 0;
 	int lines = 1;
 	int isvar = 0;
@@ -454,6 +470,7 @@ void Checking::IniCheck() {
 				}
 				IniList.Type.push_back(var);
 				IniList.Name.push_back(varName);
+				cout << varName;
 				if (isdigit(varName[0])) {
 					ErrStrAndNum.StrNum.push_back(lines);
 					ErrStrAndNum.Description.push_back(" недопустимое название переменной!");
@@ -474,10 +491,9 @@ void Checking::IniCheck() {
 						ErrStrAndNum.Description.push_back(" требуется точка с запятой ';'!");
 
 					}
-					cout << "\n" << varData;
+					
 				}
-				cout << "\n" << var;
-				cout << "\n" << varName;
+				
 
 
 			}

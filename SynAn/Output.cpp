@@ -49,7 +49,11 @@ void Output::printErr() {
 	for (int i = 0; i < Elen; i++) {
 		int lines = ErrBr.StrNum[i];
 		string des = ErrBr.Description[i];
-		cout << "\nНе хватает " << lines << des << endl;
+		if(ErrBr.YesNo[i]==0)
+			cout << "\nНе хватает " << lines << des << endl;
+		else
+			cout  << lines << "\nЛишняя(их) " << des << endl;
+
 		flag = 1;
 	}
 
@@ -161,7 +165,8 @@ void Output::print_menu(int* com) {
 	printf("\t\t|                                                                                   |\n\t\t|                                                                                   |\n");
 	printf("\t\t|\t1. Проверка кода                                                            | \n");
 	printf("\t\t|\t2. Открыть файл                                                             | \n");
-	printf("\t\t|\t3. Выход                                                                    | \n\t\t|                                                                                   |\n\t\t");
+	printf("\t\t|\t3. Информация                                                               | \n");
+	printf("\t\t|\t4. Выход                                                                    | \n\t\t|                                                                                   |\n\t\t");
 	printf("\x1b[38;5;028m0===================================================================================0\n");
 	printf("\n\t\t\x1b[38;5;040m   Вводить здесь -> ");
 	scanf("%d", com);

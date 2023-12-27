@@ -9,10 +9,16 @@ class Checking: public Input
 private:
 	string Vars[7] = { "int", "char", "string", "bool", "float", "double","void" };
 	string Names[17] = { "int", "char", "string", "bool", "float", "double", "for","while","break","continue","do","#define","#include","using","namespace","printf","//"};
-	string Opers[19] = { "=", "<", ">", ">=", "<=", "!=", "+", "-", "+=", "-=", "++", "--", "(", ")", "{", "}", ";", "," };
+	string Opers[21] = { "=", "<", ">", ">=", "<=", "!=", "+", "-", "+=", "-=", "++", "--", "(", ")", "{", "}", ";", "," ,"{", "}" };
 	struct Errors {
 		vector <string> Description{};
 		vector <int> StrNum{};
+	};
+	struct ErrorsBr {
+		vector <string> Description{};
+		vector <int> StrNum{};
+		vector <bool> YesNo{};
+
 	};
 	struct Init {
 		vector <string> Type{};
@@ -23,7 +29,8 @@ private:
 
 protected:
 	Errors ErrStrAndNum;
-	Errors ErrBr;
+	ErrorsBr ErrBr;
+	
 	vector <string> ErrOnlyStr{};
 	vector <string> namesint{};
 	Init IniList;

@@ -16,7 +16,7 @@ void main() {
 				printf("%d", i);
 			}
 
-		}
+][		}
 		continue;
 		
 	}
